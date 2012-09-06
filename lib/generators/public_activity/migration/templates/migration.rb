@@ -1,8 +1,8 @@
 # Migration responsible for creating a table with activities
-class CreateActivities < ActiveRecord::Migration
+class CreateModelActivities < ActiveRecord::Migration
   # Create table
   def self.up
-    create_table :activities do |t|
+    create_table :model_activities do |t|
       t.belongs_to :trackable, :polymorphic => true
       t.belongs_to :owner, :polymorphic => true
       t.string  :key
@@ -14,6 +14,6 @@ class CreateActivities < ActiveRecord::Migration
   end
   # Drop table
   def self.down
-    drop_table :activities
+    drop_table :model_activities
   end
 end

@@ -11,7 +11,7 @@ module PublicActivity
   extend ActiveSupport::Concern
   extend ActiveSupport::Autoload
   autoload :Activist
-  autoload :Activity
+  autoload :ModelActivity
   autoload :Tracked
   autoload :Creation
   autoload :Update

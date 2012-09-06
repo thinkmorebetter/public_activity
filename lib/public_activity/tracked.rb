@@ -43,7 +43,7 @@ module PublicActivity
 
     # @!group Instance options
 
-    # Set or get parameters that will be passed to {Activity} when saving
+    # Set or get parameters that will be passed to {ModelActivity} when saving
     #
     # == Usage:
     #
@@ -51,11 +51,11 @@ module PublicActivity
     #   @article.save
     #
     # This way you can pass strings that should remain constant, even when model attributes
-    # change after creating this {Activity}.
+    # change after creating this {ModelActivity}.
     # @return [Hash<Symbol, Object>]
     attr_accessor :activity_params
     @activity_params = {}
-    # Set or get owner object responsible for the {Activity}.
+    # Set or get owner object responsible for the {ModelActivity}.
     #
     # == Usage:
     #
@@ -80,7 +80,7 @@ module PublicActivity
     # @return (see #activity_owner)
     attr_accessor :activity_recipient
     @activity_recipient = nil
-    # Set or get custom i18n key passed to {Activity}, later used in {Activity#text}
+    # Set or get custom i18n key passed to {ModelActivity}, later used in {ModelActivity#text}
     #
     # == Usage:
     #
@@ -98,7 +98,7 @@ module PublicActivity
 
     # @!endgroup
 
-    # A shortcut method for setting custom key, owner and parameters of {Activity}
+    # A shortcut method for setting custom key, owner and parameters of {ModelActivity}
     # in one line. Accepts a hash with 3 keys:
     # :key, :owner, :params. You can specify all of them or just the ones you want to overwrite.
     #
@@ -139,7 +139,7 @@ module PublicActivity
       #
       # == Parameters:
       # [:owner]
-      #   Specify the owner of the {Activity} (person responsible for the action).
+      #   Specify the owner of the {ModelActivity} (person responsible for the action).
       #   It can be a Proc, Symbol or an ActiveRecord object:
       #   == Examples:
       #
@@ -149,7 +149,7 @@ module PublicActivity
       #   Keep in mind that owner relation is polymorphic, so you can't just
       #   provide id number of the owner object.
       # [:recipient]
-      #   Specify the recipient of the {Activity}
+      #   Specify the recipient of the {ModelActivity}
       #   It can be a Proc, Symbol, or an ActiveRecord object
       #   == Examples:
       #
@@ -160,7 +160,7 @@ module PublicActivity
       #   provide id number of the owner object.
       # [:params]
       #   Accepts a Hash with custom parameters you want to pass to i18n.translate
-      #   method. It is later used in {Activity#text} method.
+      #   method. It is later used in {ModelActivity#text} method.
       #   == Example:
       #    class Article < ActiveRecord::Base
       #      include PublicActivity::Model
@@ -179,7 +179,7 @@ module PublicActivity
       #   specified directly in {#activity} method.
       #   So treat it as a place where you provide 'default' values or where you
       #   specify what data should be gathered for every activity.
-      #   For more dynamic settings refer to {Activity} model documentation.
+      #   For more dynamic settings refer to {ModelActivity} model documentation.
       # [:skip_defaults]
       #   Disables recording of activities on create/update/destroy leaving that to programmer's choice. Check {PublicActivity::Common#create_activity}
       #   for a guide on how to manually record activities.
@@ -263,7 +263,7 @@ module PublicActivity
           self.activity_hooks = options[:on].delete_if {|_, v| !v.is_a? Proc}.symbolize_keys if RUBY_VERSION == "1.8.7"
           self.activity_hooks = options[:on].select {|_, v| v.is_a? Proc}.symbolize_keys if RUBY_VERSION != "1.8.7"
         end
-        has_many :activities, :class_name => "PublicActivity::Activity", :as => :trackable
+        has_many :activities, :class_name => "PublicActivity::ModelActivity", :as => :trackable
 
         nil
       end

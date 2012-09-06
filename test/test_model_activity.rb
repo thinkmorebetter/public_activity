@@ -1,8 +1,8 @@
 require 'test_helper'
 
-class TestActivity < ActionView::TestCase
+class TestModelActivity < ActionView::TestCase
   def test_rendering
-    @activity = PublicActivity::Activity.new(:key => 'activity.test')
+    @activity = PublicActivity::ModelActivity.new(:key => 'activity.test')
     @activity.parameters = {:one => 1}
     @activity.save
     I18n.config.backend.store_translations(:en,
@@ -10,7 +10,7 @@ class TestActivity < ActionView::TestCase
     )
     assert_equal '1 2', @activity.text(:two => 2)
     assert_equal({:one => 1}, @activity.parameters,
-      'Activity#text should not change instance parameters'
+      'ModelActivity#text should not change instance parameters'
     )
 
     # #render

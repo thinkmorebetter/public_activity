@@ -90,7 +90,7 @@ module PublicActivity
       end
     end
 
-    # Prepares settings used during creation of Activity record.
+    # Prepares settings used during creation of ModelActivity record.
     # params passed directly to tracked model have priority over
     # settings specified in tracked() method
     #

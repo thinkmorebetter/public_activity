@@ -1,7 +1,7 @@
 module PublicActivity
   # The ActiveRecord model containing
   # details about recorded activity.
-  class Activity < ActiveRecord::Base
+  class ModelActivity < ActiveRecord::Base
     # Define polymorphic association to the parent
     belongs_to :trackable, :polymorphic => true
     # Define ownership to a resource responsible for this activity
@@ -20,7 +20,7 @@ module PublicActivity
     #
     # == Example:
     #
-    # Let's say you want to show article's title inside Activity message.
+    # Let's say you want to show article's title inside ModelActivity message.
     #
     #   #config/pba.yml
     #   activity:
@@ -65,12 +65,12 @@ module PublicActivity
     #
     # If partial view exists that matches the *key* attribute
     # renders that partial with local variables set to contain both
-    # Activity and activity_parameters (hash with indifferent access)
+    # ModelActivity and activity_parameters (hash with indifferent access)
     #
     # Otherwise, it outputs the I18n translation to the context
     # @example Render a list of all activities from a view (erb)
     #   <ul>
-    #     <% for activity in PublicActivity::Activity.all %>
+    #     <% for activity in PublicActivity::ModelActivity.all %>
     #      <li><%= render_activity(activity) %></li>
     #     <% end %>
     #   </ul>
@@ -119,7 +119,7 @@ module PublicActivity
     # Builds the path to template based on activity key
     # TODO: verify that attribute `key` is splitted by commas
     #       and that the word before first comma is equal to
-    #       "activity"
+    #       "model_activity"
     def template_path(key)
       path = key.split(".")
       path.delete_at(0) if path[0] == "activity"

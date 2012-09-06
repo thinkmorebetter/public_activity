@@ -9,22 +9,22 @@ describe "public_activity" do
     
     it "should create a record in activity table" do
       #we should have no records
-      PublicActivity::Activity.count.should == 0
+      PublicActivity::ModelActivity.count.should == 0
     
       lambda do
         category = Category.create(:name => "test cat")
-        activity = PublicActivity::Activity.last
+        activity = PublicActivity::ModelActivity.last
         activity.trackable_id.should == category.id
-      end.should change(PublicActivity::Activity, :count).by(1)
+      end.should change(PublicActivity::ModelActivity, :count).by(1)
     end
     
-    describe "activity model" do
+    describe "model_activity model" do
       before(:each) do
         @category = Category.create(:name => "test cat")
       end
   
       it "should have a nil owner" do
-        activity = PublicActivity::Activity.last
+        activity = PublicActivity::ModelActivity.last
         activity.owner.should be_nil
       end
   
@@ -33,7 +33,7 @@ describe "public_activity" do
         @category.activity_owner = department
         @category.save
     
-        activity = PublicActivity::Activity.last
+        activity = PublicActivity::ModelActivity.last
         activity.owner.should_not be_nil
       end
       
@@ -50,7 +50,7 @@ describe "public_activity" do
         lambda do
           @category.destroy
           @category.activities.last.text.should == "Someone deleted the category!"
-        end.should change(PublicActivity::Activity, :count).by(1)  
+        end.should change(PublicActivity::ModelActivity, :count).by(1)  
       end
       
       it "should track updates" do
@@ -58,7 +58,7 @@ describe "public_activity" do
           @category.name = "new cat"
           @category.save
           @category.activities.last.text.should == "Someone modified the category"
-        end.should change(PublicActivity::Activity, :count).by(1)  
+        end.should change(PublicActivity::ModelActivity, :count).by(1)  
       end
       
       it "should evaluate associations" do
@@ -74,7 +74,7 @@ describe "public_activity" do
         lambda do
          note = Note.find(1)
          note.destroy
-        end.should change(PublicActivity::Activity, :count).by(0)
+        end.should change(PublicActivity::ModelActivity, :count).by(0)
       end
       
       it "should not track create for department (except)" do
@@ -82,18 +82,18 @@ describe "public_activity" do
          dept = Department.find(1)
          dept.name = "new name"
          dept.save
-        end.should change(PublicActivity::Activity, :count).by(1)
+        end.should change(PublicActivity::ModelActivity, :count).by(1)
         
         lambda do
          dept = Department.find(1)
          dept.destroy
-        end.should change(PublicActivity::Activity, :count).by(1)     
+        end.should change(PublicActivity::ModelActivity, :count).by(1)     
            
         lambda do
          dept = Department.new
          dept.name = "some name"
          dept.save
-        end.should change(PublicActivity::Activity, :count).by(0)   
+        end.should change(PublicActivity::ModelActivity, :count).by(0)   
              
       end
     end
@@ -115,7 +115,7 @@ describe "public_activity" do
   
   describe "template failures" do
     it "should not die on nil" do
-      PublicActivity::Activity.template = nil
+      PublicActivity::ModelActivity.template = nil
       @category = Category.create(:name => "test cat")
       @category.activities.last.text.should == "Template not defined"
     end

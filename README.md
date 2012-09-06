@@ -47,12 +47,12 @@ And now, by default create/update/destroy activities are recorded in activities 
 
 ### Displaying activities
 
-To display them you simply query the `PublicActivity::Activity` ActiveRecord model:
+To display them you simply query the `PublicActivity::ModelActivity` ActiveRecord model:
 
 ```ruby
 # notifications_controller.rb
 def index
-  @activities = PublicActivity::Activity.all
+  @activities = PublicActivity::ModelActivity.all
 end
 ```
 
@@ -77,13 +77,13 @@ A useful example would be to render activities wrapped in layout, which shares c
 
 The activity will be wrapped with the `app/views/layouts/activity` layout, in the above example.
 
-### Activity views
+### ModelActivity views
 
 Since version `0.4.0` you can use views to render activities. `public_activity` looks for views in `app/views/public_activity`, and this is now the *default* behaviour.
 
-For example, if you have an activity with `:key` set to `"activity.user.changed_avatar"`, the gem will look for a partial in `app/views/public_activity/user/_changed_avatar.(erb|haml|slim|something_else)`.
+For example, if you have an activity with `:key` set to `"model_activity.user.changed_avatar"`, the gem will look for a partial in `app/views/public_activity/user/_changed_avatar.(erb|haml|slim|something_else)`.
 
-*Hint*: the `"activity."` prefix in `:key` is completely optional and kept for backwards compatibility, you can skip it in new projects.
+*Hint*: the `"model_activity."` prefix in `:key` is completely optional and kept for backwards compatibility, you can skip it in new projects.
 
 If a view file does not exist, then p_a falls back to the old behaviour and tries to translate the activity `:key` using `I18n#translate` method (see the section below).
 
@@ -101,7 +101,7 @@ activity:
     destroy: 'Some user removed an article!'
 ```
 
-This structure is valid for activities with keys `"activity.article.create"` or `"article.create"`. As mentioned before, `"activity."` part of the key is optional.
+This structure is valid for activities with keys `"model_activity.article.create"` or `"article.create"`. As mentioned before, `"model_activity."` part of the key is optional.
 
 ## Upgrading
 
@@ -119,7 +119,7 @@ There are a couple of major differences between 0.3 and 0.4 version. To upgrade,
 2.   public_activity's config YAML file is no longer used (by default in `config/pba.yml`). Move your YAML contents to your `config/locales/*.yml` files.
 
      <br/>**IMPORTANT**: Locales are no longer rendered with ERB, this has been removed in favor of real view partials like in actual Rails apps.
-     Read [Activity views](#activity-views) section above to learn how to use those templates.<br/>
+     Read [ModelActivity views](#activity-views) section above to learn how to use those templates.<br/>
 
 3.   Generate and run migration which adds new column to `activities` table:
 

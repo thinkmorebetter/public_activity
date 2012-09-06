@@ -5,11 +5,11 @@ module PublicActivity
 
     # Association of activities as their owner.
     # @!method activities
-    # @return [Array<Activity>] Activities which self is the owner of.
+    # @return [Array<ModelActivity>] Activities which self is the owner of.
 
     # Association of activities as their recipient.
     # @!method private_activities
-    # @return [Array<Activity>] Activities which self is the recipient of.
+    # @return [Array<ModelActivity>] Activities which self is the recipient of.
 
     # Module extending classes that serve as owners
     module ClassMethods
@@ -28,8 +28,8 @@ module PublicActivity
       #   User.first.activities
       #
       def activist
-        has_many :activities, :class_name => "PublicActivity::Activity", :as => :owner
-        has_many :private_activities, :class_name => "PublicActivity::Activity", :as => :recipient
+        has_many :activities, :class_name => "PublicActivity::ModelActivity", :as => :owner
+        has_many :private_activities, :class_name => "PublicActivity::ModelActivity", :as => :recipient
       end
     end
   end

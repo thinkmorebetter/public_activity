@@ -1,7 +1,7 @@
 require 'rails/generators/named_base'
 
 module PublicActivity
-  # A generator module with Activity table schema.
+  # A generator module with ModelActivity table schema.
   module Generators
     # A base module 
     module Base
